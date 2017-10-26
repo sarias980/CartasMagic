@@ -1,8 +1,10 @@
 package com.example.sergi.cartasmagic;
 
+import android.os.AsyncTask;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -12,7 +14,6 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -61,6 +62,9 @@ public class MainActivityFragment extends Fragment {
         );
         lvCartas.setAdapter(adapter);
 
+        RefreshDataTask task = new RefreshDataTask();
+        task.execute();
+
         return view;
 
     }
@@ -81,6 +85,27 @@ public class MainActivityFragment extends Fragment {
     }
 
     private void refresh() {
+        RefreshDataTask task = new RefreshDataTask();
+        task.execute();
     }
 
+    private class RefreshDataTask extends AsyncTask<Void, Void, ArrayList<Cartas>> {
+        @Override
+        protected ArrayList<Cartas> doInBackground(Void... voids) {
+            MagicAPI api = new MagicAPI();
+            ArrayList<Cartas> result = api.get100Cartas();
+
+            Log.d("DEBUG", result.toString());
+
+            return result;
+        }
+
+        @Override
+        protected void onPostExecute(ArrayList<Cartas> cartas) {
+            adapter.clear();
+            for (Cartas carta : cartas) {
+                adapter.add(carta.getNombre());
+            }
+        }
+    }
 }

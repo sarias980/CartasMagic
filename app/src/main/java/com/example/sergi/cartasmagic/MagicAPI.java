@@ -40,19 +40,19 @@ public class MagicAPI {
         ArrayList<Cartas> cartas = new ArrayList<>();
         try {
             JSONObject data = new JSONObject(jsonResponse);
-            JSONArray jsonCartas = data.getJSONArray("results");
+            JSONArray jsonCartas = data.getJSONArray("cards");
             for (int i = 0; i < jsonCartas.length(); i++) {
                 JSONObject jsonCarta = jsonCartas.getJSONObject(i);
 
                 Cartas carta = new Cartas();
                 carta.setNombre(jsonCarta.getString("name"));
                 carta.setImagenURL(jsonCarta.getString("imageUrl"));
-                carta.setDescripcion(jsonCarta.getString("text"));
-                carta.setFuerza(jsonCarta.getInt("power"));
-                carta.setDefensa(jsonCarta.getInt("toughness"));
-                carta.setTipo(jsonCarta.getString("type"));
-                carta.setRareza(jsonCarta.getString("supertypes"));
-                carta.setAvilidades(jsonCarta.getString("layout"));
+                if(jsonCarta.has("text")){carta.setDescripcion(jsonCarta.getString("text"));}
+                if(jsonCarta.has("power")){carta.setFuerza(jsonCarta.getInt("power"));}
+                if(jsonCarta.has("toughness")){carta.setDefensa(jsonCarta.getInt("toughness"));}
+                if(jsonCarta.has("type")){carta.setTipo(jsonCarta.getString("type"));}
+                if(jsonCarta.has("supertype")){carta.setRareza(jsonCarta.getString("supertypes"));}
+                if(jsonCarta.has("layout")){carta.setAvilidades(jsonCarta.getString("layout"));}
 
                 cartas.add(carta);
             }

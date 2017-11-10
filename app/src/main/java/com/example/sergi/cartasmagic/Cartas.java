@@ -1,7 +1,5 @@
 package com.example.sergi.cartasmagic;
 
-import java.util.ArrayList;
-
 /**
  * Created by Sergi on 19/10/2017.
  */
@@ -12,20 +10,20 @@ public class Cartas {
     private int fuerza;
     private int defensa;
     private String tipo;
-    private String avilidades;
+    private String habilidades;
     private String rareza;
 
     public Cartas(){
 
     }
 
-    public Cartas(String nombre, String imagenURL, int fuerza, int defensa, String tipo, String avilidades, String rareza, String descripcion) {
+    public Cartas(String nombre, String imagenURL, int fuerza, int defensa, String tipo, String habilidades, String rareza, String descripcion) {
         this.nombre = nombre;
         this.imagenURL = imagenURL;
         this.fuerza = fuerza;
         this.defensa = defensa;
         this.tipo = tipo;
-        this.avilidades = avilidades;
+        this.habilidades = habilidades;
         this.rareza = rareza;
         this.descripcion = descripcion;
     }
@@ -82,12 +80,12 @@ public class Cartas {
         this.tipo = tipo;
     }
 
-    public String getAvilidades() {
-        return avilidades;
+    public String getHabilidades() {
+        return habilidades;
     }
 
-    public void setAvilidades(String avilidades) {
-        this.avilidades = avilidades;
+    public void setHabilidades(String habilidades) {
+        this.habilidades = habilidades;
     }
 
     public String getDescripcion() {
@@ -104,7 +102,7 @@ public class Cartas {
                 "nombre='" + nombre + '\n' +
                 imagenURL + '\n' +
                 "(" + fuerza + "/" + defensa + ")\n tipo=" + tipo +
-                "\navilidades=" + avilidades +
+                "\nhabilidades=" + habilidades +
                 "\ndescripcion='" + descripcion +
                 '}';
     }

@@ -26,6 +26,17 @@ public class MagicAPI {
         return doCall(url);
     }
 
+    ArrayList<Cartas> getColorCartas(String color) {
+        Uri builtUri = Uri.parse(BASE_URL)
+                .buildUpon()
+                .appendPath("cards")
+                .appendQueryParameter("colors", color)
+               .build();
+        String url = builtUri.toString();
+
+        return doCall(url);
+    }
+
     private ArrayList<Cartas> doCall(String url) {
         try {
             String JsonResponse = HttpUtils.get(url);
@@ -52,7 +63,7 @@ public class MagicAPI {
                 if(jsonCarta.has("toughness")){carta.setDefensa(jsonCarta.getInt("toughness"));}
                 if(jsonCarta.has("type")){carta.setTipo(jsonCarta.getString("type"));}
                 if(jsonCarta.has("supertype")){carta.setRareza(jsonCarta.getString("supertypes"));}
-                if(jsonCarta.has("layout")){carta.setAvilidades(jsonCarta.getString("layout"));}
+                if(jsonCarta.has("layout")){carta.setHabilidades(jsonCarta.getString("layout"));}
 
                 cartas.add(carta);
             }

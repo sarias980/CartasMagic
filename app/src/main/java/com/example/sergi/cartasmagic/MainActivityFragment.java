@@ -1,6 +1,8 @@
 package com.example.sergi.cartasmagic;
 
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
@@ -22,8 +24,8 @@ import java.util.Arrays;
  */
 public class MainActivityFragment extends Fragment {
 
-    private ArrayList<String> items;
-    private ArrayAdapter<String> adapter;
+    private ArrayList<Cartas> items;
+    private ArrayAdapter<Cartas> adapter;
 
     public MainActivityFragment() {
     }
@@ -42,17 +44,7 @@ public class MainActivityFragment extends Fragment {
 
         ListView lvCartas = (ListView) view.findViewById(R.id.lvCartas);
 
-        String[] data = {
-                "The Monarch",
-                "Vampire Token (Black 1/1)",
-                "Angel Token (White 4/4)",
-                "Wurm Token (Artifact 3/3 Lifelink)",
-                "Golem Token (Artifact 3/3)",
-                "Elf Warrior Token (Green 1/1)",
-                "Bird Token (White 1/1)"
-        };
-
-        items = new ArrayList<>(Arrays.asList(data));
+        items = new ArrayList<>();
 
         adapter = new ArrayAdapter<>(
                 getContext(),
@@ -83,7 +75,11 @@ public class MainActivityFragment extends Fragment {
 
         return super.onOptionsItemSelected(item);
     }
-
+    @Override
+    public void onStart() {
+        super.onStart();
+        refresh();
+    }
     private void refresh() {
         RefreshDataTask task = new RefreshDataTask();
         task.execute();
@@ -93,7 +89,18 @@ public class MainActivityFragment extends Fragment {
         @Override
         protected ArrayList<Cartas> doInBackground(Void... voids) {
             MagicAPI api = new MagicAPI();
-            ArrayList<Cartas> result = api.get100Cartas();
+
+
+            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+            //String rareza = preferences.getString("Rareza", "All");
+            String color = preferences.getString("Color", " ");
+
+            ArrayList<Cartas> result = null;
+            if (!color.equals(" ")) {
+                result = api.getColorCartas(color);
+            } else {
+                result = api.get100Cartas();
+            }
 
             Log.d("DEBUG", result.toString());
 
@@ -104,7 +111,7 @@ public class MainActivityFragment extends Fragment {
         protected void onPostExecute(ArrayList<Cartas> cartas) {
             adapter.clear();
             for (Cartas carta : cartas) {
-                adapter.add(carta.getNombre());
+                adapter.add(carta);
             }
         }
     }

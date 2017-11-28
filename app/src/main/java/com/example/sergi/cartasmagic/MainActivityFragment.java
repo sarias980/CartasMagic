@@ -1,10 +1,11 @@
 package com.example.sergi.cartasmagic;
 
+import android.arch.lifecycle.LifecycleFragment;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,19 +14,25 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.example.sergi.cartasmagic.databinding.FragmentMainBinding;
+
 import java.util.ArrayList;
-import java.util.Arrays;
+
 
 /**
  * A placeholder fragment containing a simple view.
  */
-public class MainActivityFragment extends Fragment {
+public class MainActivityFragment extends LifecycleFragment {
 
     private ArrayList<Cartas> items;
-    private ArrayAdapter<Cartas> adapter;
+    private CartasAdapter adapter;
+    private FragmentMainBinding binding;
+    private SharedPreferences preferences;
+    private CartasViewModel model;
+
 
     public MainActivityFragment() {
     }
@@ -40,22 +47,34 @@ public class MainActivityFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_main, container, false);
+        binding = FragmentMainBinding.inflate(inflater);
+        View view = binding.getRoot();
 
         ListView lvCartas = (ListView) view.findViewById(R.id.lvCartas);
 
         items = new ArrayList<>();
 
-        adapter = new ArrayAdapter<>(
+        adapter = new CartasAdapter(
                 getContext(),
                 R.layout.lv_cartas_row,
-                R.id.tvCarta,
                 items
         );
-        lvCartas.setAdapter(adapter);
+        binding.lvCartas.setAdapter(adapter);
 
         RefreshDataTask task = new RefreshDataTask();
         task.execute();
+
+        binding.lvCartas.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+          @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+              Cartas carta = (Cartas) adapterView.getItemAtPosition(i);
+              Intent intent = new Intent(getContext(), DetailActivity.class);
+              intent.putExtra("carta", carta);
+
+              startActivity(intent);
+            }
+        });
 
         return view;
 

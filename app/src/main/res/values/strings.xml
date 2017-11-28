@@ -96,4 +96,5 @@
         <item>r</item>
         <item>m</item>
     </string-array>
+    <string name="title_activity_detail">DetailActivity</string>
 </resources>

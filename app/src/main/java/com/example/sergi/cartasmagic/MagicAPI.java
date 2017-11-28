@@ -57,7 +57,7 @@ public class MagicAPI {
 
                 Cartas carta = new Cartas();
                 carta.setNombre(jsonCarta.getString("name"));
-                carta.setImagenURL(jsonCarta.getString("imageUrl"));
+                if(jsonCarta.has("imageUrl")){carta.setImagenURL(jsonCarta.getString("imageUrl"));}
                 if(jsonCarta.has("text")){carta.setDescripcion(jsonCarta.getString("text"));}
                 if(jsonCarta.has("power")){carta.setFuerza(jsonCarta.getInt("power"));}
                 if(jsonCarta.has("toughness")){carta.setDefensa(jsonCarta.getInt("toughness"));}

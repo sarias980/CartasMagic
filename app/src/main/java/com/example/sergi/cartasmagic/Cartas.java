@@ -1,10 +1,12 @@
 package com.example.sergi.cartasmagic;
 
+import java.io.Serializable;
+
 /**
  * Created by Sergi on 19/10/2017.
  */
 
-public class Cartas {
+public class Cartas implements Serializable {
     private String nombre;
     private String imagenURL;
     private int fuerza;

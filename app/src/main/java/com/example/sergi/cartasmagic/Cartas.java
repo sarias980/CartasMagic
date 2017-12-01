@@ -106,6 +106,6 @@ public class Cartas implements Serializable {
                 "(" + fuerza + "/" + defensa + ")\n tipo=" + tipo +
                 "\nhabilidades=" + habilidades +
                 "\ndescripcion='" + descripcion +
-                '}';
+                "}\n";
     }
 }

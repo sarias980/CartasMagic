@@ -34,10 +34,8 @@ public class DetailActivityFragment extends Fragment {
 
         if (i != null) {
             Cartas carta = (Cartas) i.getSerializableExtra("carta");
-            Log.d("DEBUG", carta.toString());
 
             if (carta != null) {
-                Log.d("DEBUG", carta.toString());
                 updateUi(carta);
             }
         }
@@ -48,7 +46,6 @@ public class DetailActivityFragment extends Fragment {
     private void updateUi(Cartas carta) {
         Log.d("CARTAS", carta.toString());
 
-        binding.name.setText(carta.getNombre());
         Glide.with(getContext()).load(carta.getImagenURL()).into(binding.imageCarta);
 
     }

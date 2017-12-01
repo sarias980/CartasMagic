@@ -50,7 +50,7 @@ public class MainActivityFragment extends LifecycleFragment {
         binding = FragmentMainBinding.inflate(inflater);
         View view = binding.getRoot();
 
-        ListView lvCartas = (ListView) view.findViewById(R.id.lvCartas);
+        //ListView lvCartas = (ListView) view.findViewById(R.id.lvCartas);
 
         items = new ArrayList<>();
 
@@ -61,14 +61,17 @@ public class MainActivityFragment extends LifecycleFragment {
         );
         binding.lvCartas.setAdapter(adapter);
 
-        RefreshDataTask task = new RefreshDataTask();
-        task.execute();
+        //RefreshDataTask task = new RefreshDataTask();
+        //task.execute();
 
         binding.lvCartas.setOnItemClickListener(new AdapterView.OnItemClickListener() {
           @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
               Cartas carta = (Cartas) adapterView.getItemAtPosition(i);
+
+              Log.d("CARTA ANTES", carta.toString());
+
               Intent intent = new Intent(getContext(), DetailActivity.class);
               intent.putExtra("carta", carta);
 
@@ -121,7 +124,7 @@ public class MainActivityFragment extends LifecycleFragment {
                 result = api.get100Cartas();
             }
 
-            Log.d("DEBUG", result.toString());
+            //Log.d("DEBUG", result.toString());
 
             return result;
         }

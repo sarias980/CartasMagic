@@ -32,12 +32,9 @@ public class CartasAdapter extends ArrayAdapter<Cartas> {
 
         // Obtenim l'objecte en la possició corresponent
         Cartas carta = getItem(position);
-        Log.w("XXXX", carta.toString());
 
         LvCartasRowBinding binding = null;
 
-        // Mirem a veure si la View s'està reusant, si no es així "inflem" la View
-        // https://github.com/codepath/android_guides/wiki/Using-an-ArrayAdapter-with-ListView#row-view-recycling
         if (convertView == null) {
             LayoutInflater inflater = LayoutInflater.from(getContext());
             binding = DataBindingUtil.inflate(inflater, R.layout.lv_cartas_row, parent, false);
@@ -50,7 +47,6 @@ public class CartasAdapter extends ArrayAdapter<Cartas> {
         binding.fuerzaDefensa.setText("("+ carta.getFuerza()+ "/" + carta.getDefensa() + ")");
         Glide.with(getContext()).load(carta.getImagenURL()).into(binding.imageCard);
 
-        // Retornem la View replena per a mostrarla
         return binding.getRoot();
     }
 

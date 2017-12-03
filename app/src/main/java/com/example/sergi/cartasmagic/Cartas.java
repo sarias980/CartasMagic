@@ -9,6 +9,7 @@ import java.io.Serializable;
  * Created by Sergi on 19/10/2017.
  */
 
+@Entity(tableName = "cartas")
 public class Cartas implements Serializable {
     @PrimaryKey(autoGenerate = true)
     private int id;
@@ -20,11 +21,7 @@ public class Cartas implements Serializable {
     private String habilidades;
     private String rareza;
 
-    public Cartas(){
-
-    }
-
-    public Cartas(String nombre, String imagenURL, int fuerza, int defensa, String tipo, String habilidades, String rareza, String descripcion) {
+    /*public Cartas(String nombre, String imagenURL, int fuerza, int defensa, String tipo, String habilidades, String rareza, String descripcion) {
         this.nombre = nombre;
         this.imagenURL = imagenURL;
         this.fuerza = fuerza;
@@ -33,7 +30,7 @@ public class Cartas implements Serializable {
         this.habilidades = habilidades;
         this.rareza = rareza;
         this.descripcion = descripcion;
-    }
+    }*/
 
     public int getId() {
         return id;

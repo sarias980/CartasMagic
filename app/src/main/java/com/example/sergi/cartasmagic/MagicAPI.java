@@ -15,7 +15,7 @@ import java.util.ArrayList;
 
 public class MagicAPI {
     private final String BASE_URL = "https://api.magicthegathering.io/v1";
-    private final int PAGES = 5;
+    //private final int PAGES = 5;
 
     ArrayList<Cartas> get100Cartas() {
         return doCall("cards", " ");
@@ -25,7 +25,7 @@ public class MagicAPI {
         return doCall("cards", color);
     }
 
-    private String getUrlPage(String funcion, String filtro, int pagina) {
+    private String getUrlPage(String funcion, String filtro) {
         Uri builtUri = Uri.parse(BASE_URL)
                 .buildUpon()
                 .appendPath(funcion)
@@ -37,16 +37,16 @@ public class MagicAPI {
     private ArrayList<Cartas> doCall(String funcion, String filtro) {
         ArrayList<Cartas> cartas = new ArrayList<>();
 
-        for (int i = 0; i < PAGES; i++){
+        //for (int i = 0; i < PAGES; i++){
             try{
-                String url = getUrlPage(funcion, filtro, i);
+                String url = getUrlPage(funcion, filtro);
                 String JsonResponse = HttpUtils.get(url);
                 ArrayList<Cartas> list = processJason(JsonResponse);
                 cartas.addAll(list);
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        }
+        //}
         return cartas;
     }
 

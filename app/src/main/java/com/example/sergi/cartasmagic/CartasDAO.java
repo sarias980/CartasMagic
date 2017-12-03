@@ -12,17 +12,20 @@ import java.util.List;
  */
 
 public interface CartasDAO {
-    @Query("select * from movie")
-    LiveData<List<Cartas>> getMovies();
+    @Query("select * from cartas")
+    LiveData<List<Cartas>> getCartas();
 
     @Insert
-    void addMovie(Cartas movie);
+    void addCarta(Cartas carta);
+
+    @Insert
+    void addCartas(List<Cartas> cartas);
 
     @Delete
-    void deleteMovie(Cartas movie);
+    void deleteCartas(Cartas carta);
 
-    @Query("DELETE FROM movie")
-    void deleteMovies();
+    @Query("DELETE FROM cartas")
+    void deleteCartas();
 
 
 }

@@ -1,9 +1,9 @@
 package com.example.sergi.cartasmagic;
 
 import android.app.Application;
+import android.app.ProgressDialog;
 import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.MutableLiveData;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
@@ -18,22 +18,21 @@ import java.util.List;
 
 public class CartasViewModel extends AndroidViewModel {
     private final Application app;
-    private MutableLiveData<List<Cartas>> cartas;
+    private final AppDatabase appDatabase;
+    private final CartasDAO cartasDAO;
+    private LiveData<List<Cartas>> cartas;
+    private static final int PAGES = 10;
 
     public CartasViewModel(Application application) {
         super(application);
 
         this.app = application;
+        this.appDatabase = AppDatabase.getDatabase(this.getApplication());
+        this.cartasDAO = appDatabase.getMovieDao();
     }
 
     public LiveData<List<Cartas>> getCartas() {
-        Log.d("DEBUG", "ENTRA");
-
-        if (cartas == null) {
-            cartas = new MutableLiveData<>();
-            reload();
-        }
-        return cartas;
+        return cartasDAO.getCartas();
     }
 
     public void reload() {
@@ -57,13 +56,11 @@ public class CartasViewModel extends AndroidViewModel {
 
             Log.d("DEBUG", result.toString());
 
+            cartasDAO.deleteCartas();
+            cartasDAO.addCartas(result);
+
             return result;
         }
 
-        @Override
-        protected void onPostExecute(ArrayList<Cartas> results) {
-
-            cartas.postValue(results);
-        }
     }
 }

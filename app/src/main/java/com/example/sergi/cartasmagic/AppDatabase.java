@@ -1,5 +1,6 @@
 package com.example.sergi.cartasmagic;
 
+import android.arch.persistence.room.Database;
 import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
@@ -8,6 +9,7 @@ import android.content.Context;
  * Created by Sergi on 01/12/2017.
  */
 
+@Database(entities = {Cartas.class}, version = 1)
 public abstract class AppDatabase extends RoomDatabase {
 
     private static AppDatabase INSTANCE;

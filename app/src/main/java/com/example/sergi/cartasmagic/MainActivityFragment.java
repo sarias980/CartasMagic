@@ -19,7 +19,6 @@ import android.arch.lifecycle.LifecycleFragment;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 
-
 import com.example.sergi.cartasmagic.databinding.FragmentMainBinding;
 
 import java.util.ArrayList;
@@ -73,8 +72,6 @@ public class MainActivityFragment extends LifecycleFragment {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
               Cartas carta = (Cartas) adapterView.getItemAtPosition(i);
-
-              Log.d("CARTA ANTES", carta.toString());
 
               Intent intent = new Intent(getContext(), DetailActivity.class);
               intent.putExtra("carta", carta);

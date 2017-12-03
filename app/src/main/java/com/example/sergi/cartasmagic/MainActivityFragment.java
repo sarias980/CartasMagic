@@ -15,11 +15,15 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ListView;
+import android.arch.lifecycle.LifecycleFragment;
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
+
 
 import com.example.sergi.cartasmagic.databinding.FragmentMainBinding;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -79,6 +83,16 @@ public class MainActivityFragment extends LifecycleFragment {
             }
         });
 
+        model = ViewModelProviders.of(this).get(CartasViewModel.class);
+        model.getCartas().observe(this, new Observer<List<Cartas>>() {
+            @Override
+            public void onChanged(@Nullable List<Cartas> cartas) {
+                adapter.clear();
+                adapter.addAll(cartas);
+            }
+        });
+
+
         return view;
 
     }
@@ -100,42 +114,9 @@ public class MainActivityFragment extends LifecycleFragment {
     @Override
     public void onStart() {
         super.onStart();
-        refresh();
     }
     private void refresh() {
-        RefreshDataTask task = new RefreshDataTask();
-        task.execute();
-    }
-
-    private class RefreshDataTask extends AsyncTask<Void, Void, ArrayList<Cartas>> {
-        @Override
-        protected ArrayList<Cartas> doInBackground(Void... voids) {
-            MagicAPI api = new MagicAPI();
-
-
-            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
-            //String rareza = preferences.getString("Rareza", "All");
-            String color = preferences.getString("Color", " ");
-
-            ArrayList<Cartas> result = null;
-            if (!color.equals(" ")) {
-                result = api.getColorCartas(color);
-            } else {
-                result = api.get100Cartas();
-            }
-
-            //Log.d("DEBUG", result.toString());
-
-            return result;
-        }
-
-        @Override
-        protected void onPostExecute(ArrayList<Cartas> cartas) {
-            adapter.clear();
-            for (Cartas carta : cartas) {
-                adapter.add(carta);
-            }
-        }
+        model.reload();
     }
 
 }

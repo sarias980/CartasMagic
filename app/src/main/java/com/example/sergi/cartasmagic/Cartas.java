@@ -1,5 +1,8 @@
 package com.example.sergi.cartasmagic;
 
+import android.arch.persistence.room.PrimaryKey;
+import android.arch.persistence.room.Entity;
+
 import java.io.Serializable;
 
 /**
@@ -7,6 +10,8 @@ import java.io.Serializable;
  */
 
 public class Cartas implements Serializable {
+    @PrimaryKey(autoGenerate = true)
+    private int id;
     private String nombre;
     private String imagenURL;
     private int fuerza;
@@ -28,6 +33,14 @@ public class Cartas implements Serializable {
         this.habilidades = habilidades;
         this.rareza = rareza;
         this.descripcion = descripcion;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getImagenURL() {

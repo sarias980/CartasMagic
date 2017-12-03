@@ -16,7 +16,7 @@ import java.util.List;
  * Created by Sergi on 23/11/2017.
  */
 
-class CartasViewModel extends AndroidViewModel {
+public class CartasViewModel extends AndroidViewModel {
     private final Application app;
     private MutableLiveData<List<Cartas>> cartas;
 
@@ -36,7 +36,7 @@ class CartasViewModel extends AndroidViewModel {
         return cartas;
     }
 
-    private void reload() {
+    public void reload() {
         RefreshDataTask task = new RefreshDataTask();
         task.execute();
     }
@@ -62,6 +62,7 @@ class CartasViewModel extends AndroidViewModel {
 
         @Override
         protected void onPostExecute(ArrayList<Cartas> results) {
+
             cartas.postValue(results);
         }
     }

@@ -53,13 +53,9 @@ public class CartasViewModel extends AndroidViewModel {
             MagicAPI api = new MagicAPI();
             ArrayList<Cartas> result = null;
 
-            Log.d("DEBUG", color);
+            Log.d("Color", color);
 
-            if (!color.equals(" ")) {
-                result = api.getColorCartas(color);
-            } else {
-                result = api.get100Cartas();
-            }
+            result = api.getColorCartas(color);
 
             Log.d("DEBUG", result.toString());
 

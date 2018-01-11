@@ -1,6 +1,7 @@
 package com.example.sergi.cartasmagic;
 
 import android.net.Uri;
+import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -15,11 +16,6 @@ import java.util.ArrayList;
 
 public class MagicAPI {
     private final String BASE_URL = "https://api.magicthegathering.io/v1";
-    //private final int PAGES = 5;
-
-    ArrayList<Cartas> get100Cartas() {
-        return doCall("cards", " ");
-    }
 
     ArrayList<Cartas> getColorCartas(String color) {
         return doCall("cards", color);
@@ -29,15 +25,15 @@ public class MagicAPI {
         Uri builtUri = Uri.parse(BASE_URL)
                 .buildUpon()
                 .appendPath(funcion)
-                .appendQueryParameter("filtro", filtro)
+                .appendQueryParameter("colors", filtro)
                 .build();
+        Log.d("URL",builtUri.toString());
         return builtUri.toString();
     }
 
     private ArrayList<Cartas> doCall(String funcion, String filtro) {
         ArrayList<Cartas> cartas = new ArrayList<>();
 
-        //for (int i = 0; i < PAGES; i++){
             try{
                 String url = getUrlPage(funcion, filtro);
                 String JsonResponse = HttpUtils.get(url);
@@ -46,7 +42,7 @@ public class MagicAPI {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        //}
+
         return cartas;
     }
 

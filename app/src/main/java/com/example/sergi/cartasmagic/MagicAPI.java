@@ -27,7 +27,7 @@ public class MagicAPI {
                 .appendPath(funcion)
                 .appendQueryParameter("colors", filtro)
                 .build();
-        Log.d("URL",builtUri.toString());
+
         return builtUri.toString();
     }
 
